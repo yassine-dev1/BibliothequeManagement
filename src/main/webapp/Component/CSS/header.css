@@ -1,0 +1,89 @@
+:root {
+    --nav-bg: #1e293b;
+    --nav-accent: #38bdf8;
+    --nav-text: #f8fafc;
+}
+
+.main-header {
+    background-color: var(--nav-bg);
+    color: var(--nav-text);
+    padding: 0 2rem;
+    height: 70px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+.header-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-logo small { font-weight: 300; font-size: 0.9rem; color: var(--nav-accent); }
+
+.header-menu {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.header-menu a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+.header-menu a:hover, .header-menu a.active {
+    color: var(--nav-text);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.header-menu a.active {
+    border-bottom: 2px solid var(--nav-accent);
+    border-radius: 8px 8px 0 0;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.user-name { font-size: 0.85rem; color: #94a3b8; }
+
+.logout-btn {
+    background: #ef4444;
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.logout-btn:hover { background: #dc2626; transform: translateY(-1px); }

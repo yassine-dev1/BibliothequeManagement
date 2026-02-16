@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Test JSF 4.0</title>
+</h:head>
+
+<h:body>
+    <h2>Bienvenue dans mon projet JSF</h2>
+
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel for="nomSaisi" value="Entrez votre nom :" />
+            <h:inputText id="nomSaisi" value="#{helloBean.nom}" />
+
+            <h:commandButton value="Valider" action="#{helloBean.direBonjour}" />
+        </h:panelGrid>
+
+        <hr />
+
+        <h:outputText id="resultat" value="#{helloBean.message}" 
+                      style="font-weight:bold; color:blue;" />
+    </h:form>
+</h:body>
+</html>

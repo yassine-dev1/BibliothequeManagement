@@ -1,0 +1,107 @@
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --bg-color: #f4f7f6;
+    --white: #ffffff;
+    --shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background: var(--white);
+    width: 350px;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.grid {
+    text-align: left;
+}
+
+/* Style des champs de saisie */
+input[type="text"], 
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box; /* Important pour que le padding n'élargisse pas le champ */
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+label {
+    color: var(--primary-color);
+    font-weight: 500;
+    display: block;
+    margin-top: 15px;
+}
+
+/* Bouton de connexion */
+.btn-login {
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 25px;
+    transition: background 0.3s;
+}
+
+.btn-login:hover {
+    background-color: var(--accent-color);
+}
+
+/* Messages d'erreur */
+.error-msg {
+    color: #e74c3c;
+    font-size: 0.85em;
+    list-style: none;
+    padding: 0;
+    margin: 5px 0;
+}
+
+hr {
+    margin: 25px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.signup-link {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.signup-link a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+}

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Inscription - Bibliothèque FSTM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="CSS/signUp.css" />
+</h:head>
+
+<h:body>
+    <div class="signup-container">
+        <div style="text-align: center; color: var(--accent-color); margin-bottom: 10px;">
+            <i class="fa-solid fa-user-plus fa-3x"></i>
+        </div>
+        <h2>Créer un compte</h2>
+
+        <h:form id="registrationForm">
+            <h:panelGroup rendered="#{not empty singUp.messageErreur}" layout="block" styleClass="error-container">
+                <i class="fa-solid fa-circle-exclamation"></i> 
+                <h:outputText value=" #{singUp.messageErreur}" />
+            </h:panelGroup>
+
+		<h:panelGrid columns="1" styleClass="grid">
+
+   				 	<!-- Prenom -->
+    			<h:outputLabel for="fname" value="Prénom :" />
+    			<h:inputText id="fname"
+	                 value="#{singUp.user.firstname}"
+	                 required="true"
+                 	requiredMessage="Prénom requis" />
+   				 <h:message for="fname" styleClass="field-error" />
+
+					<!-- Nom -->
+    			<h:outputLabel for="lname" value="Nom :" />
+    			<h:inputText id="lname"
+                 	value="#{singUp.user.lastname}"
+                	 required="true"
+                	 requiredMessage="Nom requis" />
+    			<h:message for="lname" styleClass="field-error" />
+
+    		<!-- Username -->
+    			<h:outputLabel for="uname" value="Nom d'utilisateur :" />
+    			<h:inputText id="uname"
+                 	value="#{singUp.user.username}"
+                 	required="true"
+                 	requiredMessage="Username requis" />
+    			<h:message for="uname" styleClass="field-error" />
+
+    		<!-- Email -->
+    			<h:outputLabel for="email" value="Email :" />
+    			<h:inputText id="email"
+                 	value="#{singUp.user.email}"
+                 	required="true"
+                 	requiredMessage="Email requis">
+        			<f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" />
+    			</h:inputText>
+    			<h:message for="email" styleClass="field-error" />
+
+    			<!-- Password -->
+    			<h:outputLabel for="pwd" value="Mot de passe :" />
+    			<h:inputSecret id="pwd"
+                   value="#{singUp.user.password}"
+                   required="true"
+                   requiredMessage="Mot de passe requis" />
+    			<h:message for="pwd" styleClass="field-error" />
+
+    			<!-- Confirm Password -->
+    			<h:outputLabel for="cpwd" value="Confirmer le mot de passe :" />
+    			<h:inputSecret id="cpwd"
+                   value="#{singUp.cPassword}"
+                   required="true"
+                   requiredMessage="Confirmation requise" />
+    			<h:message for="cpwd" styleClass="field-error" />
+
+				</h:panelGrid>
+
+            	<h:commandButton value="S'inscrire" action="#{singUp.registration}" styleClass="btn-signup" />
+            
+            <div class="footer-link">
+                Déjà un compte ? <h:link value="Se connecter" outcome="login" />
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

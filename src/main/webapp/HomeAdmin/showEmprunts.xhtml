@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <title>Circulation - Gestion des Emprunts</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+     <link rel="stylesheet" href="../CSS/ManagedEmprunts.css"></link>
+     <link rel="stylesheet" href="../CSS/ManagedLivres.css"></link>
+     <link rel="stylesheet" href="../Component/CSS/header.css"></link>
+</h:head>
+<h:body>
+    <ui:include src="../Component/header.xhtml" />
+    <div class="container">
+        <h1>
+             <i class="fa-solid fa-hand-holding-hand" style="color: var(--lib-gold);"></i>
+             <span>Circulation &amp; Emprunts</span>
+        </h1>
+
+        <h:form id="mainForm">
+            <div class="filter-bar">
+                <h:commandButton value="+ Enregistrer un Prêt" action="#{EmpruntManagedBean.prepareNouveauEmprunt}" styleClass="btn-new">
+                    <f:ajax render=":mainForm:dialogPanel" />
+                </h:commandButton>
+            </div>
+            <h:messages id="globalMessages" globalOnly="true" styleClass="jsf-msg" 
+                        showDetail="true" showSummary="false"
+                        infoClass="msg-success" errorClass="msg-error" />
+
+            <h:dataTable id="empruntTable" value="#{EmpruntManagedBean.empruntsEnCours}" var="e" styleClass="modern-table">
+                <h:column>
+                    <f:facet name="header">Adhérent</f:facet>
+                    <div class="user-cell">
+                        <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+                        <span style="font-weight: 600;">#{e.userName}</span>
+                    </div>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Livre emprunté</f:facet>
+                    <div style="display: flex; align-items: center;">
+                        <i class="fa-solid fa-book" style="margin-right: 10px; color: #94a3b8;"></i>
+                        <strong>#{e.livreTitre}</strong>
+                    </div>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Date de Sortie</f:facet>
+                    <h:outputText value="#{e.dateSortie}">
+                        <f:convertDateTime pattern="dd MMM yyyy" />
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Retour Prévu</f:facet>
+                    <h:outputText value="#{e.dateRetourMax}" styleClass="#{EmpruntManagedBean.estEnRetard(e.dateRetourMax) ? 'text-danger' : ''}" style="font-weight:bold;">
+                        <f:convertDateTime pattern="dd MMM yyyy" />
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Statut</f:facet>
+                    <h:panelGroup styleClass="status-pill #{EmpruntManagedBean.estEnRetard(e.dateRetourMax) ? 'overdue' : 'on-time'}">
+                        <i class="fa-solid #{EmpruntManagedBean.estEnRetard(e.dateRetourMax) ? 'fa-triangle-exclamation' : 'fa-clock'}"></i>
+                        #{EmpruntManagedBean.estEnRetard(e.dateRetourMax) ? ' RETARD' : ' EN COURS'}
+                    </h:panelGroup>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <h:commandLink action="#{EmpruntManagedBean.marquerCommeRendu(e)}" 
+                                   styleClass="action-icon edit-icon" title="Enregistrer le retour"
+                                   onclick="return confirm('Confirmer le retour de ce livre ?');">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                        <f:ajax render="@form mainForm:empruntTable mainForm:globalMessages" onevent="handleAjaxMessages" />
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
+
+            <h:panelGroup id="dialogPanel">
+                <h:panelGroup layout="block" styleClass="modal-overlay" rendered="#{EmpruntManagedBean.showModal}">
+                    <div class="modal-content" style="max-width: 500px;">
+                        <h3>📖 Nouveau Prêt</h3>
+                        <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 20px;">
+                            Sélectionnez l'adhérent et le livre pour valider l'emprunt (durée 7 jours).
+                        </p>
+                        
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label><i class="fa-solid fa-user-tag"></i> Adhérent :</label>
+                            <h:selectOneMenu value="#{EmpruntManagedBean.selectedAdherentId}" styleClass="form-input" style="width:100%">
+                                <f:selectItem itemLabel="-- Choisir l'adhérent --" itemValue="" />
+                                <f:selectItems value="#{EmpruntManagedBean.listeAdherents}" var="u" 
+                                               itemLabel="#{u.firstName} #{u.lastName}" itemValue="#{u.userID}" />
+                            </h:selectOneMenu>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 25px;">
+                            <label><i class="fa-solid fa-book-open"></i> Livre disponible :</label>
+                            <h:selectOneMenu value="#{EmpruntManagedBean.selectedIsbn}" styleClass="form-input" style="width:100%">
+                                <f:selectItem itemLabel="-- Choisir le livre --" itemValue="" />
+                                <f:selectItems value="#{EmpruntManagedBean.listeLivresDispo}" var="l" 
+                                               itemLabel="#{l.titre} [#{l.categorie}]" itemValue="#{l.isbn}" />
+                            </h:selectOneMenu>
+                        </div>
+
+                        <div style="text-align: right; border-top: 1px solid #eee; pt: 20px;">
+                            <h:commandButton value="Annuler" action="#{EmpruntManagedBean.setShowModal(false)}" styleClass="btn-cancel" style="margin-right:10px;">
+                                <f:ajax render="dialogPanel" />
+                            </h:commandButton>
+                            <h:commandButton value="Valider le prêt" action="#{EmpruntManagedBean.enregistrerEmprunt}" styleClass="btn-save">
+                                <f:ajax execute="@form" render="mainForm" onevent="handleAjaxMessages" />
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:form>
+    </div>
+
+    <script type="text/javascript" src="../JS/ManagedMessages.js"></script>
+</h:body>
+</html>

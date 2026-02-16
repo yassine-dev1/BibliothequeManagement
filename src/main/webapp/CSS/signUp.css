@@ -1,0 +1,126 @@
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --success-color: #27ae60;
+    --bg-color: #f4f7f6;
+    --white: #ffffff;
+    --shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.signup-container {
+    background: var(--white);
+    width: 100%;
+    max-width: 500px; /* Un peu plus large pour 2 colonnes */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+h2 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+}
+
+/* Style de la grille JSF */
+.grid {
+    width: 100%;
+}
+
+.grid td {
+    padding: 8px 5px;
+}
+
+label {
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+input[type="text"], 
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: all 0.3s;
+}
+
+input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+    outline: none;
+}
+
+.btn-signup {
+    width: 100%;
+    background-color: var(--success-color); /* Vert pour l'action de création */
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.btn-signup:hover {
+    background-color: #219150;
+}
+
+.field-error {
+    color: #e74c3c;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    display: block; /* Pour qu'il passe à la ligne */
+    font-weight: 500;
+}
+
+/* Style pour l'erreur globale du haut */
+.error-container {
+    background-color: #fdeaea;
+    color: #c0392b;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ebccd1;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Animation optionnelle pour attirer l'attention sur l'erreur */
+@keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    25% {transform: translateX(-5px);}
+    75% {transform: translateX(5px);}
+}
+.global-error {
+    animation: shake 0.3s ease-in-out;
+}
+
+.footer-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.footer-link a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: bold;
+}

@@ -1,0 +1,238 @@
+/* Palette de couleurs & Variables */
+:root {
+    --lib-dark: #1a2a3a;       /* Bleu nuit profond */
+    --lib-gold: #c5a059;       /* Or vieilli pour le côté prestige */
+    --lib-accent: #3498db;     /* Bleu moderne pour les actions */
+    --lib-bg: #f8fafc;         /* Gris très clair pour le fond */
+    --success: #27ae60;
+    --danger: #e74c3c;
+    --warning: #f39c12;
+    --white: #ffffff;
+    --shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--lib-bg);
+    color: var(--lib-dark);
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--lib-dark);
+    border-left: 5px solid var(--lib-gold);
+    padding-left: 15px;
+}
+
+/* --- Barre de Filtres --- */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--lib-bg);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+.btn-new {
+    background-color: var(--lib-dark);
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(26, 42, 58, 0.2);
+}
+
+.btn-new:hover {
+    background-color: var(--lib-accent);
+    transform: translateY(-2px);
+}
+
+.form-input {
+    padding: 10px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.form-input:focus {
+    border-color: var(--lib-accent);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+/* --- Tableau Moderne --- */
+.modern-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 10px;
+}
+
+.modern-table th {
+    background-color: #f1f5f9;
+    color: #64748b;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.modern-table td {
+    padding: 18px 15px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.modern-table tr:hover {
+    background-color: #fcfdfd;
+}
+
+/* Conteneur de l'image pour un alignement parfait */
+.book-thumbnail {
+    width: 60px;               /* Largeur fixe */
+    height: 85px;              /* Hauteur proportionnelle (ratio ~2:3) */
+    object-fit: cover;         /* Coupe l'image proprement sans la déformer */
+    border-radius: 6px;        /* Arrondis élégants */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Effet d'ombre pour le relief */
+    border: 1px solid #e0e0e0; /* Bordure fine pour définir les bords */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: zoom-in;           /* Indique que l'image est interactive */
+    display: block;
+    margin: 0 auto;            /* Centre l'image dans sa cellule */
+}
+
+/* Effet au survol : le livre s'anime légèrement */
+.book-thumbnail:hover {
+    transform: scale(1.1);     /* Agrandissement léger */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+    z-index: 10;
+}
+
+/* Ajustement de la cellule du tableau pour l'image */
+.modern-table td:first-child {
+    width: 80px;               /* Fixe la largeur de la colonne image */
+    text-align: center;
+}
+
+/* Badges de Disponibilité */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+}
+
+.badge-available { background-color: var(--success); }
+.badge-low { background-color: var(--warning); }
+.badge-empty { background-color: var(--danger); }
+
+/* Icônes d'actions */
+.action-icon {
+    font-size: 1.1rem;
+    margin-right: 15px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.edit-icon { color: var(--lib-accent); }
+.delete-icon { color: var(--danger); }
+
+.action-icon:hover { opacity: 0.7; }
+
+/* --- Modal & Formulaires --- */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(26, 42, 58, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: var(--lib-dark);
+    font-size: 1.5rem;
+}
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.modal-content .form-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Boutons Modal */
+.btn-cancel {
+    background: #e5e7eb;
+    color: #4b5563;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-save {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+}
+
+/* Messages JSF */
+.jsf-msg {
+    list-style: none;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.msg-success { background: #dcfce7; color: #166534; border-left: 4px solid var(--success); }
+.msg-error { background: #fee2e2; color: #991b1b; border-left: 4px solid var(--danger); }

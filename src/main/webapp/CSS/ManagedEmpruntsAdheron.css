@@ -1,0 +1,82 @@
+/* Configuration Générale */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.main-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Style */
+.page-header {
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 1rem;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3436;
+    margin: 0;
+}
+
+.header-content h1 i {
+    color: #0984e3;
+    margin-right: 10px;
+}
+
+/* Table Design */
+.card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.custom-table .ui-datatable-header {
+    background: transparent !important;
+    border: none !important;
+    text-align: right;
+    padding-bottom: 1rem;
+}
+
+.badge-id {
+    background: #dfe6e9;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+/* Boutons et Actions */
+.rounded-button {
+    border-radius: 50% !important;
+    width: 35px !important;
+    height: 35px !important;
+    margin: 0 3px !important;
+}
+
+.text-danger {
+    color: #d63031 !important;
+    font-weight: bold;
+}
+
+/* Input Search */
+.filter-container input {
+    width: 250px;
+    border-radius: 20px !important;
+    padding-left: 30px !important;
+}

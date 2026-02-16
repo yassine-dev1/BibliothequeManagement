@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <title>Gestion du Catalogue - Bibliothèque</title>
+    <link rel="stylesheet" href="../CSS/ManagedLivres.css"></link>
+    <link rel="stylesheet" href="../Component/CSS/header.css"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</h:head>
+<h:body>
+    <ui:include src="../Component/header.xhtml" />
+    <div class="container">
+        <h2>📚 Catalogue des Livres</h2>
+
+        <h:form id="mainForm">
+            <div class="filter-bar">
+                <h:commandButton value="+ Ajouter un livre" action="#{LivreManagedBean.prepareCreate}" styleClass="btn-new">
+                    <f:ajax render="dialogPanel" />
+                </h:commandButton>
+
+                <h:outputLabel value="Catégorie :" style="font-weight:bold" />
+                <h:selectOneMenu value="#{LivreManagedBean.searchCategory}" styleClass="form-input" style="width:200px">
+                    <f:selectItem itemLabel="Toutes" itemValue="" />
+                    <f:selectItems value="#{LivreManagedBean.categoriesDisponibles}" />
+                    <f:ajax event="change" listener="#{LivreManagedBean.filterByCategory}" render="livreTable" />
+                </h:selectOneMenu>
+            </div>
+
+            <h:messages id="globalMessages" globalOnly="true" styleClass="jsf-msg"  showDetail="true" showSummary="false" 
+                        infoClass="msg-success" errorClass="msg-error" />
+
+            <h:dataTable id="livreTable" value="#{LivreManagedBean.livres}" var="l" styleClass="modern-table">
+				<h:column>
+    				<f:facet name="header">Couverture</f:facet>
+    				<h:graphicImage value="#{not empty l.image ? l.image : '../RESSOURCES/IMAGES/DefaultBook.jfif'}" 
+                    styleClass="book-thumbnail" />
+				</h:column>
+
+    			<h:column>
+       	 			<f:facet name="header">ISBN</f:facet>
+        			<span class="isbn-text">#{l.isbn}</span>
+    			</h:column>
+
+    			<h:column>
+        			<f:facet name="header">Titre / Auteur</f:facet>
+       				 <div class="book-info">
+           				 <span class="book-title">#{l.titre}</span>
+            			 <span class="book-author">par #{l.auteur}</span>
+        			</div>
+    			</h:column>
+
+    			<h:column>
+        			<f:facet name="header">Catégorie</f:facet>
+        			<span class="category-tag">#{l.categorie}</span>
+   	 			</h:column>
+
+    			<h:column>
+        			<f:facet name="header">Dispo</f:facet>
+        			<span class="badge #{l.disponibles == 0 ? 'badge-empty' : (l.disponibles le (l.exemplaires/2)? 'badge-low' : 'badge-available')}">
+            			#{l.disponibles} / #{l.exemplaires}
+       				 </span>
+    			</h:column>
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <h:commandLink action="#{LivreManagedBean.prepareEdit(l)}" styleClass="action-icon edit-icon" title="Modifier">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <f:ajax render=":mainForm:dialogPanel" />
+                    </h:commandLink>
+                    <h:commandLink action="#{LivreManagedBean.deleteLivre(l.isbn)}" styleClass="action-icon delete-icon" 
+                                   title="Supprimer" onclick="return confirm('Supprimer ce livre du catalogue ?');">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <f:ajax render="@form" onevent="handleAjaxMessages" /> 
+                    </h:commandLink>
+                </h:column>
+            </h:dataTable>
+
+            <h:panelGroup id="dialogPanel">
+                <h:panelGroup layout="block" styleClass="modal-overlay" rendered="#{LivreManagedBean.showModal}">
+                    <div class="modal-content" style="width: 600px;">
+                        <h3>#{LivreManagedBean.editMode ? '📝 Modifier le Livre' : '📖 Nouveau Livre'}</h3>
+                        <hr/>
+                        
+                        <div class="form-grid-2">
+                            <h:panelGroup>
+                                <label>ISBN :</label>
+                                <h:inputText value="#{LivreManagedBean.selectedLivre.isbn}" styleClass="form-input" 
+                                             disabled="#{LivreManagedBean.editMode}" required="true" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <label>Catégorie :</label>
+                                <h:inputText value="#{LivreManagedBean.selectedLivre.categorie}" styleClass="form-input" list="catList" />
+                                <datalist id="catList">
+                                    <f:selectItems value="#{LivreManagedBean.categoriesDisponibles}" />
+                                </datalist>
+                            </h:panelGroup>
+                        </div>
+
+                        <label>Titre du livre :</label>
+                        <h:inputText value="#{LivreManagedBean.selectedLivre.titre}" styleClass="form-input" required="true" />
+
+                        <label>Auteur :</label>
+                        <h:inputText value="#{LivreManagedBean.selectedLivre.auteur}" styleClass="form-input" required="true" />
+
+                        <div class="form-grid-2" style="margin-top:10px;">
+                            <h:panelGroup>
+                                <label>Total Exemplaires :</label>
+                                <h:inputText value="#{LivreManagedBean.selectedLivre.exemplaires}" styleClass="form-input" type="number" />
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <label>En Rayon (Disponibles) :</label>
+                                <h:inputText value="#{LivreManagedBean.selectedLivre.disponibles}" styleClass="form-input" type="number" />
+                            </h:panelGroup>
+                        </div>
+
+                        <div style="margin-top:25px; text-align:right;">
+                            <h:commandButton value="Fermer" action="#{LivreManagedBean.closeModal}" styleClass="btn-cancel">
+                                <f:ajax render="dialogPanel" />
+                            </h:commandButton>
+                            <h:commandButton action="#{LivreManagedBean.save}" styleClass="btn-save" style="margin-left:10px;">
+                                <i class="fa-solid fa-check"></i> Enregistrer
+                                <f:ajax execute="@form" render="mainForm:livreTable mainForm:globalMessages dialogPanel" 
+                                        onevent="handleAjaxMessages" />
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:form>
+    </div>
+    
+    <script type="text/javascript" src="../JS/ManagedMessages.js"> </script>
+</h:body>
+</html>

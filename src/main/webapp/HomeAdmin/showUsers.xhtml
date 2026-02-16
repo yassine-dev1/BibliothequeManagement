@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <title>Gestion Adhérents - Bibliothèque</title>
+    <link rel="stylesheet" href="../CSS/ManagedAdherons.css"></link>
+    <link rel="stylesheet" href="../Component/CSS/header.css"></link>
+</h:head>
+<h:body>
+    <ui:include src="../Component/header.xhtml" />
+    <div class="container">
+        <h2>📚 Gestion des Adhérents</h2>
+
+        <h:form id="mainForm">
+            <h:commandButton value="+ Nouvel Adhérent" action="#{userBean.prepareCreate}" styleClass="btn-new">
+                <f:ajax render="dialogPanel" />
+            </h:commandButton>
+            
+            <h:panelGroup id="msgWrapper">
+                <h:messages id="globalMessages" globalOnly="true" layout="vertical" showDetail="true" showSummary="false"
+                            errorClass="msg-error" infoClass="msg-success" styleClass="jsf-msg" />
+            </h:panelGroup>
+
+            <h:dataTable value="#{userBean.users}" var="u" styleClass="modern-table">
+                <h:column><f:facet name="header">Prénom</f:facet>#{u.firstName}</h:column>
+                <h:column><f:facet name="header">Nom</f:facet>#{u.lastName}</h:column>
+                <h:column><f:facet name="header">Email</f:facet>#{u.email}</h:column>
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    
+                    <h:outputLink value="showAllEmprunts.xhtml" title="Voir Emprunts" styleClass="action-icon view-icon">
+                		<f:param name="idAdheron" value="#{u.userID}" />
+                		<f:param name="nameAdherant" value="#{u.lastName}" />
+                		<i class="fa-solid fa-book-open"></i>
+            		</h:outputLink>
+            		
+                    <h:commandLink action="#{userBean.prepareEdit(u)}" title="Modifier" styleClass="action-icon edit-icon">
+            			<i class="fa-solid fa-pen-to-square"></i>
+           			    <f:ajax render=":mainForm:dialogPanel" />
+        			</h:commandLink>
+                    <h:commandLink action="#{userBean.deleteUser(u.userID)}" title="Supprimer" 
+                       styleClass="action-icon delete-icon"
+                       onclick="return confirm('Voulez-vous vraiment supprimer cet adhérent ?');">
+            			<i class="fa-solid fa-trash-can"></i>
+            			<f:ajax render="mainForm" onevent="handleAjaxMessages" />
+        			</h:commandLink>
+        		</h:column>
+            </h:dataTable>
+
+            <h:panelGroup id="dialogPanel">
+                <h:panelGroup layout="block" styleClass="modal-overlay" rendered="#{userBean.showModal}">
+                    <div class="modal-content">
+                        <h3>#{userBean.editMode ? '📝 Modifier' : '👤 Créer'} Adhérent</h3>
+                        <hr/>
+                        <h:panelGrid columns="1" style="width:100%">
+                            <h:messages id="globalMessages2" globalOnly="true" layout="vertical" showDetail="true" showSummary="false"
+                            			errorClass="msg-error" infoClass="msg-success" styleClass="jsf-msg" />
+                            <h:outputLabel value="Prénom :" />
+                            <h:inputText value="#{userBean.selectedUser.firstname}" styleClass="form-input" required="true" />
+                            
+                            <h:outputLabel value="Nom :" />
+                            <h:inputText value="#{userBean.selectedUser.lastname}" styleClass="form-input" required="true" />
+
+                            <h:outputLabel value="Email :" />
+                            <h:inputText value="#{userBean.selectedUser.email}" styleClass="form-input" required="true" />
+                            
+                            <h:panelGroup rendered="#{!userBean.editMode}">
+                                <h:outputLabel value="Password :" /><br/>
+                                <h:inputSecret value="#{userBean.selectedUser.password}" styleClass="form-input" required="true" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+
+                        <div style="margin-top:20px; text-align:right;">
+                            <h:commandButton value="Annuler" styleClass="btn-cancel" action="#{userBean.closeModal}" immediate="true" style="margin-right:10px;">
+                                <f:ajax render="dialogPanel" />
+                            </h:commandButton>
+                            <h:commandButton value="Enregistrer" action="#{userBean.save}" styleClass="btn-save">
+    							<f:ajax execute="@form" render="dialogPanel msgWrapper mainForm" onevent="handleAjaxMessages" />
+							</h:commandButton>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:form>
+    </div>
+
+    <script type="text/javascript" src="../JS/ManagedMessages.js"> </script>
+</h:body>
+</html>

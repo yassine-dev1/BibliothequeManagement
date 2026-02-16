@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Connexion - Bibliothèque FSTM</title>
+    <style>
+        .login-container { width: 300px; margin: 100px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+        .error-msg { color: red; font-size: 0.9em; }
+        .info-msg { color: green; font-size: 0.9em; }
+        .grid { width: 100%; }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="login-container">
+        <h2>Connexion</h2>
+
+
+        <h:form id="loginForm">
+            <h:messages globalOnly="true" showDetail="true" showSummary="false" styleClass="error-msg" layout="list" />
+
+            <h:panelGrid columns="1" styleClass="grid">
+                <h:outputLabel for="email" value="Email :" />
+                <h:inputText id="email" value="#{login.email}" 
+                             required="true" 
+                             requiredMessage="L'email est obligatoire" />
+                <h:message for="email" styleClass="error-msg" />
+
+                <h:outputLabel for="password" value="Mot de passe :" />
+                <h:inputSecret id="password" value="#{login.password}" 
+                               required="true" 
+                               requiredMessage="Le mot de passe est obligatoire" />
+                <h:message for="password" styleClass="error-msg" />
+
+                <h:commandButton value="Se connecter" 
+                                 action="#{login.loginAction}" 
+                                 style="margin-top: 10px;" />
+            </h:panelGrid>
+
+            <hr />
+            <p>Pas encore de compte ? <h:link value="S'inscrire ici" outcome="singUp" /></p>
+        </h:form>
+    </div>
+</h:body>
+</html>

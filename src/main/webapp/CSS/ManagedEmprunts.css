@@ -1,0 +1,105 @@
+/* --- Variables spécifiques à la circulation --- */
+:root {
+    --on-time-bg: #e8f5e9;
+    --on-time-text: #2e7d32;
+    --on-time-border: #c8e6c9;
+    --overdue-bg: #ffebee;
+    --overdue-text: #c62828;
+    --overdue-border: #ffcdd2;
+}
+
+/* --- Badges de Statut (Pills) --- */
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.on-time {
+    background-color: var(--on-time-bg);
+    color: var(--on-time-text);
+    border: 1px solid var(--on-time-border);
+}
+
+.on-rendu{
+    color: green;
+    border: 1px solid var(--on-time-border);
+}
+
+
+.overdue {
+    background-color: var(--overdue-bg);
+    color: var(--overdue-text);
+    border: 1px solid var(--overdue-border);
+    animation: pulse-red 2s infinite;
+}
+
+/* --- Alignement des cellules Adhérent --- */
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    border: 1px solid #e2e8f0;
+}
+
+/* --- Styles pour le formulaire dans la Modal --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    color: var(--lib-dark);
+    font-weight: 600;
+}
+
+.form-group label i {
+    color: var(--lib-gold);
+    font-size: 0.9rem;
+}
+
+/* --- Alertes de retard --- */
+.text-danger {
+    color: var(--overdue-text) !important;
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(198, 40, 40, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(198, 40, 40, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(198, 40, 40, 0); }
+}
+
+/* --- Optimisation du tableau --- */
+.modern-table td {
+    vertical-align: middle;
+}
+
+.book-title-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.book-subtitle {
+    font-size: 0.8rem;
+    color: #64748b;
+}

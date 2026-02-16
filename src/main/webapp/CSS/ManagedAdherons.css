@@ -1,0 +1,153 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+:root {
+    --primary-color: #2c3e50;    /* Bleu nuit professionnel */
+    --accent-color: #3498db;     /* Bleu clair pour les actions */
+    --success-color: #27ae60;
+    --danger-color: #e74c3c;
+    --bg-color: #f4f7f6;
+    --shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+
+.action-icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.action-icon:hover {
+    transform: scale(1.2);
+}
+
+.edit-icon { color: var(--accent-color); }
+.delete-icon { color: var(--danger-color); }
+
+
+.btn-save i {
+    margin-right: 8px;
+}
+
+/* Bouton Annuler (Style Neutre) */
+.btn-cancel {
+    background-color: transparent;
+    color: var(--primary-color);
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel:hover {
+    background-color: #f0f0f0;
+    border-color: #999;
+}
+
+/* Optionnel : Style spécifique pour le bouton Enregistrer (Vert) */
+.btn-save {
+    background-color: var(--success-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-save:hover {
+    background-color: #219150;
+}
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h2 {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+/* Boutons Modernes */
+.btn-new {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+    margin-bottom: 20px;
+}
+
+.btn-new:hover { background-color: #2980b9; }
+
+/* Table Style */
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.modern-table th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+.modern-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.modern-table tr:hover { background-color: #f9f9f9; }
+
+/* Modal / Boîte de dialogue */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+
+.modal-content {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: white; padding: 30px; border-radius: 12px;
+    width: 450px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 1001;
+}
+
+/* Messages */
+.msg-error, .msg-success {
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+    list-style: none;
+    font-weight: 500;
+}
+.msg-error-ignore {display : none ;}
+.msg-error { background: #fee2e2; color: #b91c1c; border-left: 5px solid var(--danger-color); }
+.msg-success { background: #dcfce7; color: #15803d; border-left: 5px solid var(--success-color); }
+
+/* Formulaire interne */
+.form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+}

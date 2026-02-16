@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<h:head>
+    <title>Circulation - Gestion des Emprunts</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+     <link rel="stylesheet" href="../CSS/ManagedEmprunts.css"></link>
+     <link rel="stylesheet" href="../CSS/ManagedLivres.css"></link>
+     <link rel="stylesheet" href="../Component/CSS/header.css"></link>
+</h:head>
+<h:body>
+    <ui:include src="../Component/header.xhtml" />
+    <div class="container">
+                <h1>
+                    <i class="pi pi-book"></i> 
+                    #{empruntAllBean.idAdheron != null ? 'Emprunts de l\'Adhérent : ' : 'Liste Globale des Emprunts'}
+                    <h:outputText value="#{empruntAllBean.fullNameAdherent}" rendered="#{empruntAllBean.idAdheron != null}" />
+                </h1>
+
+        <h:form id="mainForm">
+            <h:messages id="globalMessages" globalOnly="true" styleClass="jsf-msg" 
+                        showDetail="true" showSummary="false"
+                        infoClass="msg-success" errorClass="msg-error" />
+
+            <h:dataTable id="empruntTable" value="#{empruntAllBean.emprunts}" var="e" styleClass="modern-table">
+                <h:column>
+                    <f:facet name="header">Adhérent</f:facet>
+                    <div class="user-cell">
+                        <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+                        <span style="font-weight: 600;">#{e.userName}</span>
+                    </div>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Livre emprunté</f:facet>
+                    <div style="display: flex; align-items: center;">
+                        <i class="fa-solid fa-book" style="margin-right: 10px; color: #94a3b8;"></i>
+                        <strong>#{e.livreTitre}</strong>
+                    </div>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Date de Sortie</f:facet>
+                    <h:outputText value="#{e.dateSortie}">
+                        <f:convertDateTime pattern="dd MMM yyyy" />
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Retour Prévu</f:facet>
+                    <h:outputText value="#{e.dateRetourMax}" styleClass="#{EmpruntManagedBean.estEnRetard(e.dateRetourMax) ? 'text-danger' : ''}" style="font-weight:bold;">
+                        <f:convertDateTime pattern="dd MMM yyyy" />
+                    </h:outputText>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Statut</f:facet>
+                    <h:panelGroup styleClass="status-pill #{EmpruntManagedBean.estEnRetard(e.dateRetourMax) ? 'overdue' :  e.statut == 'EN_COURS' ? 'on-time' : 'on-rendu'}">
+                        <i class="fa-solid #{EmpruntManagedBean.estEnRetard(e.dateRetourMax) ? 'fa-triangle-exclamation' : e.statut == 'EN_COURS' ? 'fa-clock' : ''}"></i>
+                        #{empruntAllBean.estEnRetard(e.dateRetourMax) ? ' RETARD' : e.statut }
+                    </h:panelGroup>
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <h:commandLink action="#{empruntAllBean.deleteEmprunt(e.idEmprunt)}" title="Supprimer" 
+                       styleClass="action-icon delete-icon"
+                       onclick="return confirm('Voulez-vous vraiment supprimer cette Emprunt #{e.idEmprunt} ?');">
+            			<i class="fa-solid fa-trash-can"></i>
+            			 <f:ajax render="@form" onevent="handleAjaxMessages" /> 
+        			</h:commandLink>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </div>
+
+    <script type="text/javascript" src="../JS/ManagedMessages.js"></script>
+</h:body>
+</html>

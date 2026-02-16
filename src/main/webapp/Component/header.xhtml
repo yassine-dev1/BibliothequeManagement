@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets">
+    
+    <nav class="main-header">
+        <div class="header-content">
+            <div class="header-logo">
+                <i class="fa-solid fa-university"></i>
+                <span>E-Biblio <small>FSTM</small></span>
+            </div>
+
+            <ul class="header-menu">
+                <li>
+                    <h:link outcome="/HomeAdmin/showUsers.xhtml" styleClass="#{view.viewId.contains('Users') ? 'active' : ''}">
+                        <i class="fa-solid fa-users"></i> Adhérents
+                    </h:link>
+                </li>
+                <li>
+                    <h:link outcome="/HomeAdmin/showLivres.xhtml" styleClass="#{view.viewId.contains('Livres') ? 'active' : ''}">
+                        <i class="fa-solid fa-book"></i> Catalogue
+                    </h:link>
+                </li>
+                <li>
+                    <h:link outcome="/HomeAdmin/showEmprunts.xhtml" styleClass="#{view.viewId.contains('showEmprunts') ? 'active' : ''}">
+                        <i class="fa-solid fa-right-left"></i> Emprunts_EnCours
+                    </h:link>
+                </li>
+                <li>
+                    <h:link outcome="/HomeAdmin/showAllEmprunts.xhtml" styleClass="#{view.viewId.contains('AllEmprunts') ? 'active' : ''}">
+                        <i class="fa-solid fa-right-left"></i> AllEmprunts
+                    </h:link>
+                </li>
+            </ul>
+
+            <div class="header-actions">
+                <span class="user-name">Admin</span>
+                <h:form>
+                    <h:commandLink action="#{logout.logout}" styleClass="logout-btn">
+                        <i class="fa-solid fa-power-off"></i> Déconnexion
+                    </h:commandLink>
+                </h:form>
+            </div>
+        </div>
+    </nav>
+</ui:composition>

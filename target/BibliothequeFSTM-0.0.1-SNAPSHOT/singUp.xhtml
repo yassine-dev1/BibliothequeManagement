@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <title>Inscription - Bibliothèque FSTM</title>
+    <style>
+        .error { color: red; font-weight: bold; }
+        .grid { margin-bottom: 10px; }
+    </style>
+</h:head>
+
+<h:body>
+    <h2>Créer un compte</h2>
+
+    <h:form id="registrationForm">
+        <h:outputText value="#{singUp.messageErreur}" 
+                      rendered="#{not empty singUp.messageErreur}" 
+                      styleClass="error" />
+
+        <h:panelGrid columns="2" styleClass="grid">
+            <h:outputLabel for="fname" value="Prénom :" />
+            <h:inputText id="fname" value="#{singUp.user.firstname}" required="true" />
+
+            <h:outputLabel for="lname" value="Nom :" />
+            <h:inputText id="lname" value="#{singUp.user.lastname}" required="true" />
+
+            <h:outputLabel for="uname" value="Nom d'utilisateur :" />
+            <h:inputText id="uname" value="#{singUp.user.username}" required="true" />
+
+            <h:outputLabel for="email" value="Email :" />
+            <h:inputText id="email" value="#{singUp.user.email}" required="true">
+                <f:validateRegex pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$" />
+            </h:inputText>
+
+            <h:outputLabel for="pwd" value="Mot de passe :" />
+            <h:inputSecret id="pwd" value="#{singUp.user.password}" required="true" />
+
+            <h:outputLabel for="cpwd" value="Confirmer le mot de passe :" />
+            <h:inputSecret id="cpwd" value="#{singUp.cPassword}" required="true" />
+        </h:panelGrid>
+
+        <h:commandButton value="S'inscrire" action="#{singUp.registration}" />
+        
+        <p>Déjà un compte ? <h:link value="Se connecter" outcome="login" /></p>
+    </h:form>
+</h:body>
+</html>

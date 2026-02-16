@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Gestion des Emprunts | FSTM</title>
+    <h:outputStylesheet name="CSS/ManagedEmpruntsAdheron.css" />
+</h:head>
+
+<h:body>
+    <div class="main-container">
+        <header class="page-header">
+            <div class="header-content">
+                <h1>
+                    <i class="pi pi-book"></i> 
+                    #{empruntAllBean.idAdheron != null ? 'Emprunts de l\'Adhérent #' : 'Liste Globale des Emprunts'}
+                    <h:outputText value="#{empruntAllBean.idAdheron}" rendered="#{empruntAllBean.idAdheron != null}" />
+                </h1>
+                <p:button value="Nouvel Emprunt" icon="pi pi-plus" styleClass="ui-button-success" />
+            </div>
+        </header>
+
+        <h:form id="formEmprunts">
+            <p:growl id="messages" showDetail="true" />
+
+            <div class="card shadow-sm">
+                <p:dataTable id="dt-emprunts" value="#{empruntAllBean.emprunts}" var="emprunt" 
+                             widgetVar="dtEmprunts" emptyMessage="Aucun emprunt trouvé"
+                             rowKey="#{emprunt.id}" paginator="true" rows="10" 
+                             paginatorPosition="bottom" styleClass="custom-table">
+                    
+                    <f:facet name="header">
+                        <div class="table-header">
+                            <span class="filter-container ui-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <p:inputText id="globalFilter" onkeyup="PF('dtEmprunts').filter()" placeholder="Rechercher..." />
+                            </span>
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="ID" sortBy="#{emprunt.id}" style="width: 80px; text-align: center;">
+                        <h:outputText value="#{emprunt.idEmprunt}" styleClass="badge-id" />
+                    </p:column>
+
+                    <p:column headerText="Livre / Ressource" sortBy="#{emprunt.livreTitre}">
+                        <h:outputText value="#{emprunt.livreTitre}" style="font-weight: bold; color: #2c3e50;" />
+                    </p:column>
+
+                    <p:column headerText="Date Emprunt" sortBy="#{emprunt.dateSortie}">
+                        <h:outputText value="#{emprunt.dateSortie}}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Date Retour Prévue">
+                        <h:outputText value="#{emprunt.dateRetourMax}" styleClass="#{ 'text-danger'}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="Actions" exportable="false" style="width: 120px; text-align: center;">
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-pencil" 
+                                         process="@this" title="Modifier" />
+                        
+                        <p:commandButton class="ui-button-danger rounded-button" icon="pi pi-trash" 
+                                         process="@this" 
+                                         oncomplete="PF('deleteDialog').show()"
+                                         title="Supprimer">
+                            
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+            </div>
+
+            <p:confirmDialog widgetVar="deleteDialog" showEffect="fade" width="400"
+                             message="Voulez-vous vraiment supprimer cet emprunt ?" 
+                             header="Confirmation" severity="warn">
+                <p:commandButton value="Oui" icon="pi pi-check" 
+                                 action="#{empruntAllBean.deleteEmprunt(param.selectedId)}"
+                                 process="@this" update="formEmprunts:dt-emprunts formEmprunts:messages"
+                                 oncomplete="PF('deleteDialog').hide()" />
+                <p:commandButton value="Non" type="button" styleClass="ui-button-secondary" 
+                                 icon="pi pi-times" onclick="PF('deleteDialog').hide()" />
+            </p:confirmDialog>
+        </h:form>
+    </div>
+</h:body>
+</html>

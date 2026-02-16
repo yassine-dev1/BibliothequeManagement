@@ -1,0 +1,12 @@
+com\UH2\FSTM\Management\Controller\SingUpController.class
+com\UH2\FSTM\Management\Controller\SingUp.class
+com\UH2\FSTM\Management\Model\User.class
+com\UH2\FSTM\Configuration\JWT\JWTUtil.class
+com\UH2\FSTM\test\HelloBean.class
+com\UH2\FSTM\ConnexionDB\ConnectDB.class
+com\UH2\FSTM\Management\Controller\Login.class
+com\UH2\FSTM\Management\Dao\LoginDao.class
+com\UH2\FSTM\Management\Dao\SingUPDao.class
+com\UH2\FSTM\Management\Controller\LoginController.class
+com\UH2\FSTM\Management\Dto\UserDTO.class
+com\UH2\FSTM\Management\Dto\LoginDTO.class
